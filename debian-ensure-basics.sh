@@ -1,6 +1,6 @@
 #!/bin/bash
 # vim:ts=4:sw=4:expandtab
-# © 2012 Michael Stapelberg
+# © 2012 Michael Stapelberg (see also: LICENSE)
 #
 # wget -qO- d.zekjur.net|bash -s
 
