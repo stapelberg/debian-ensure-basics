@@ -2,7 +2,7 @@
 # vim:ts=4:sw=4:expandtab
 # © 2012 Michael Stapelberg
 #
-# wget -O- d.zekjur.net | bash -s
+# wget -qO- d.zekjur.net|bash -s
 
 echo "*** debian-ensure-basics"
 
