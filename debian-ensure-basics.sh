@@ -74,7 +74,15 @@ done
 # Ensure zsh is the login shell (if it could be installed).
 ################################################################################
 
-# TODO
+ZSH=$(which zsh)
+if [ $? -eq 0 ]
+then
+    if [ "$SHELL" != "$ZSH" ]
+    then
+        echo "*** Making zsh the login shell"
+        chsh -s "$ZSH"
+    fi
+fi
 
 ################################################################################
 # Ensure configfiles are present
