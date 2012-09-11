@@ -88,6 +88,10 @@ fi
 # Ensure configfiles are present
 ################################################################################
 
-# TODO
+if [ ! -d "$HOME/configfiles" ]
+then
+    echo "*** Cloning configfiles"
+    (cd "$HOME"; git clone git://code.stapelberg.de/configfiles; cd configfiles; ./initialize.sh)
+fi
 
 echo "*** done"
