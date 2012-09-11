@@ -66,7 +66,7 @@ do
         LC_ALL=C \
         LANGUAGE=C \
         LANG=C \
-            apt-get install --force-yes -y install "$package"
+            apt-get --force-yes -y install "$package"
     fi
 done
 
