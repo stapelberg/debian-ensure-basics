@@ -57,7 +57,7 @@ fi
 ################################################################################
 for package in zsh vim sudo less git
 do
-    dpkg -l "$package" >/dev/null
+    dpkg -s "$package" >/dev/null
     if [ $? -ne 0 ]
     then
         echo "*** Installing $package..."
