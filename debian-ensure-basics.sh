@@ -32,6 +32,7 @@ done
 # APT::Install-Recommends "false";
 # APT::Install-Suggests "false";
 # Acquire::Pdiffs "no";
+# Acquire::CompressionTypes::Order:: "gz";
 ################################################################################
 
 # Ensure this directory exists, we might need to use it.
@@ -49,6 +50,11 @@ if [ $? -ne 0 ]
 then
     echo "*** Disabling APT Pdiffs..."
     echo 'Acquire::Pdiffs "no";' > /etc/apt/apt.conf.d/06disable-pdiffs
+fi
+
+if ! apt-config dump | grep -q '^Acquire::CompressionTypes::Order:: "gz";$'
+then
+    echo 'Acquire::CompressionTypes::Order { "gz"; };' > /etc/apt/apt.conf.d/07use-gzip
 fi
 
 ################################################################################
