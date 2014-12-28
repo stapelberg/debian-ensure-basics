@@ -16,8 +16,7 @@ CURRENT_LOCALES=$(grep '^[^#].' /etc/locale.gen)
 REGEN_LOCALES=0
 for locale in en_DK de_DE
 do
-    echo "$CURRENT_LOCALES" | grep -q "^$locale.UTF-8 UTF-8$"
-    if [ $? -ne 0 ]
+    if ! echo "$CURRENT_LOCALES" | grep -q "^$locale.UTF-8 UTF-8$"
     then
         echo "*** Adding locale $locale.UTF-8..."
         echo "$locale.UTF-8 UTF-8" >> /etc/locale.gen
@@ -45,8 +44,7 @@ then
     echo 'APT::Install-Suggests "false";' > /etc/apt/apt.conf.d/05disable-suggests
 fi
 
-apt-config dump | grep -q '^Acquire::Pdiffs "no";$'
-if [ $? -ne 0 ]
+if ! apt-config dump | grep -q '^Acquire::Pdiffs "no";$'
 then
     echo "*** Disabling APT Pdiffs..."
     echo 'Acquire::Pdiffs "no";' > /etc/apt/apt.conf.d/06disable-pdiffs
@@ -63,8 +61,7 @@ fi
 ################################################################################
 for package in zsh vim sudo less git
 do
-    dpkg -s "$package" >/dev/null
-    if [ $? -ne 0 ]
+    if ! dpkg -s "$package" >/dev/null
     then
         echo "*** Installing $package..."
         DEBIAN_FRONTEND=noninteractive \
