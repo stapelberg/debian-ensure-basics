@@ -50,6 +50,11 @@ then
     echo 'Acquire::Pdiffs "no";' > /etc/apt/apt.conf.d/06disable-pdiffs
 fi
 
+if apt-config dump | grep -v '^Acquire::Languages:: "none";$' | grep -q '^Acquire::Languages:: "'
+then
+    echo 'Acquire::Languages "none";' > /etc/apt/apt.conf.d/99translations
+fi
+
 if ! apt-config dump | grep -q '^Acquire::CompressionTypes::Order:: "gz";$'
 then
     echo 'Acquire::CompressionTypes::Order { "gz"; };' > /etc/apt/apt.conf.d/07use-gzip
