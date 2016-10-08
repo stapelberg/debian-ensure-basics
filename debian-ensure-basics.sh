@@ -40,14 +40,14 @@ MATCHING_LINES=$(apt-config dump | grep '^APT::Install-\(Recommends\|Suggests\) 
 if [ "$MATCHING_LINES" -ne 2 ]
 then
     echo "*** Setting APT::Install-Recommends and APT::Install-Suggests to false..."
-    echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/05disable-recommends
-    echo 'APT::Install-Suggests "false";' > /etc/apt/apt.conf.d/05disable-suggests
+    echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/99disable-recommends
+    echo 'APT::Install-Suggests "false";' > /etc/apt/apt.conf.d/99disable-suggests
 fi
 
 if ! apt-config dump | grep -q '^Acquire::Pdiffs "no";$'
 then
     echo "*** Disabling APT Pdiffs..."
-    echo 'Acquire::Pdiffs "no";' > /etc/apt/apt.conf.d/06disable-pdiffs
+    echo 'Acquire::Pdiffs "no";' > /etc/apt/apt.conf.d/99disable-pdiffs
 fi
 
 if apt-config dump | grep -v '^Acquire::Languages:: "none";$' | grep -q '^Acquire::Languages:: "'
@@ -57,7 +57,7 @@ fi
 
 if ! apt-config dump | grep -q '^Acquire::CompressionTypes::Order:: "gz";$'
 then
-    echo 'Acquire::CompressionTypes::Order { "gz"; };' > /etc/apt/apt.conf.d/07use-gzip
+    echo 'Acquire::CompressionTypes::Order { "gz"; };' > /etc/apt/apt.conf.d/99use-gzip
 fi
 
 ################################################################################
