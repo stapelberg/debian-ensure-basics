@@ -30,8 +30,10 @@ done
 # Ensure the following apt settings are present:
 # APT::Install-Recommends "false";
 # APT::Install-Suggests "false";
+# Acquire::Languages "none";
 # Acquire::Pdiffs "no";
 # Acquire::CompressionTypes::Order:: "gz";
+# APT::Periodic::Update-Package-Lists "1";
 ################################################################################
 
 # Ensure this directory exists, we might need to use it.
@@ -58,6 +60,11 @@ fi
 if ! apt-config dump | grep -q '^Acquire::CompressionTypes::Order:: "gz";$'
 then
     echo 'Acquire::CompressionTypes::Order { "gz"; };' > /etc/apt/apt.conf.d/99use-gzip
+fi
+
+if ! apt-config dump | grep -q '^APT::Periodic::Update-Package-Lists "1";$'
+then
+    echo 'APT::Periodic::Update-Package-Lists "1";' > /etc/apt/apt.conf.d/99enable-daily-list-updates
 fi
 
 ################################################################################
