@@ -7,26 +7,6 @@
 echo "*** debian-ensure-basics"
 
 ################################################################################
-# Ensure the following locales are present:
-# en_DK.UTF-8 (ISO 8601 date/time format)
-# de_DE.UTF-8 (everything else, except LC_MESSAGES)
-################################################################################
-
-CURRENT_LOCALES=$(grep '^[^#].' /etc/locale.gen)
-REGEN_LOCALES=0
-for locale in en_DK de_DE
-do
-    if ! echo "$CURRENT_LOCALES" | grep -q "^$locale.UTF-8 UTF-8$"
-    then
-        echo "*** Adding locale $locale.UTF-8..."
-        echo "$locale.UTF-8 UTF-8" >> /etc/locale.gen
-        REGEN_LOCALES=1
-    fi
-done
-
-[ $REGEN_LOCALES -eq 1 ] && locale-gen
-
-################################################################################
 # Ensure the following apt settings are present:
 # APT::Install-Recommends "false";
 # APT::Install-Suggests "false";
@@ -69,9 +49,9 @@ fi
 
 ################################################################################
 # Ensure the following packages are installed:
-# zsh, vim, sudo, less, git
+# locales, zsh, vim, sudo, less, git
 ################################################################################
-for package in zsh vim sudo less git
+for package in locales zsh vim sudo less git
 do
     if ! dpkg -s "$package" >/dev/null
     then
@@ -84,6 +64,26 @@ do
             apt-get --force-yes -y install "$package"
     fi
 done
+
+################################################################################
+# Ensure the following locales are present:
+# en_DK.UTF-8 (ISO 8601 date/time format)
+# de_DE.UTF-8 (everything else, except LC_MESSAGES)
+################################################################################
+
+CURRENT_LOCALES=$(grep '^[^#].' /etc/locale.gen)
+REGEN_LOCALES=0
+for locale in en_DK de_DE
+do
+    if ! echo "$CURRENT_LOCALES" | grep -q "^$locale.UTF-8 UTF-8$"
+    then
+        echo "*** Adding locale $locale.UTF-8..."
+        echo "$locale.UTF-8 UTF-8" >> /etc/locale.gen
+        REGEN_LOCALES=1
+    fi
+done
+
+[ $REGEN_LOCALES -eq 1 ] && locale-gen
 
 ################################################################################
 # Ensure zsh is the login shell (if it could be installed).
