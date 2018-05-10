@@ -69,11 +69,12 @@ done
 # Ensure the following locales are present:
 # en_DK.UTF-8 (ISO 8601 date/time format)
 # de_DE.UTF-8 (everything else, except LC_MESSAGES)
+# de_CH.UTF-8 (everything else, except LC_MESSAGES)
 ################################################################################
 
 CURRENT_LOCALES=$(grep '^[^#].' /etc/locale.gen)
 REGEN_LOCALES=0
-for locale in en_DK de_DE
+for locale in en_DK de_DE de_CH
 do
     if ! echo "$CURRENT_LOCALES" | grep -q "^$locale.UTF-8 UTF-8$"
     then
