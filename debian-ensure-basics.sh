@@ -107,7 +107,7 @@ fi
 if [ ! -d "$HOME/configfiles" ]
 then
     echo "*** Cloning configfiles"
-    (cd "$HOME"; git clone git://code.stapelberg.de/configfiles; cd configfiles; ./initialize.sh)
+    (cd "$HOME"; git clone https://github.com/stapelberg/configfiles; cd configfiles; ./initialize.sh)
 fi
 
 echo "*** done"
